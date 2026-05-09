@@ -22,8 +22,8 @@ REQUEST_RETRIES = 4
 
 
 LIST_QUERY = """
-query submissionList($offset: Int!, $limit: Int!, $lastKey: String, $status: Int) {
-  submissionList(offset: $offset, limit: $limit, lastKey: $lastKey, status: $status) {
+query submissionList($offset: Int!, $limit: Int!, $lastKey: String) {
+  submissionList(offset: $offset, limit: $limit, lastKey: $lastKey) {
     lastKey
     hasNext
     submissions {
@@ -375,7 +375,6 @@ class LeetCodeClient:
                     "offset": offset,
                     "limit": limit,
                     "lastKey": last_key,
-                    "status": 10,
                 },
             }
             data = self._graphql(payload)
