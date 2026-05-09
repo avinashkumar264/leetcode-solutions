@@ -1,0 +1,45 @@
+name: Sync LeetCode
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs every 6 hours in UTC.
+    - cron: "0 */6 * * *"
+
+concurrency:
+  group: leetcode-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync LeetCode submissions
+        env:
+          # Manual user action required:
+          # add these values in GitHub -> Settings -> Secrets and variables -> Actions
+          LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
+          CSRFTOKEN: ${{ secrets.CSRFTOKEN }}
+          # Optional: keep C++ as the canonical saved solution when multiple languages exist.
+          PREFERRED_LANGS: ${{ secrets.PREFERRED_LANGS }}
+        run: python scripts/sync_leetcode.py
+
+      - name: Commit updated solutions
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "Sync LeetCode submissions"
+          git push
