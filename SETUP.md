@@ -38,9 +38,6 @@ Recommended:
 From this folder, run:
 
 ```powershell
-git branch -M main
-git add .
-git commit -m "Initial LeetCode sync setup"
 git remote add origin https://github.com/<your-username>/<your-repo>.git
 git push -u origin main
 ```

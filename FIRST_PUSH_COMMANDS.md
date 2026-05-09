@@ -8,9 +8,6 @@ Replace:
 Then run these commands from this folder:
 
 ```powershell
-git branch -M main
-git add .
-git commit -m "Initial LeetCode sync setup"
 git remote add origin https://github.com/<your-username>/<your-repo>.git
 git push -u origin main
 ```
@@ -20,5 +17,13 @@ If you already created a different remote by mistake:
 ```powershell
 git remote remove origin
 git remote add origin https://github.com/<your-username>/<your-repo>.git
+git push -u origin main
+```
+
+If you edit files locally before your first push, commit those changes first:
+
+```powershell
+git add .
+git commit -m "Update LeetCode sync setup"
 git push -u origin main
 ```
