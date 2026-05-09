@@ -117,6 +117,7 @@ class Submission:
     title: str
     title_slug: str
     timestamp: int
+    status_display: str
     lang: str
     lang_name: str
     runtime: str | None
@@ -136,7 +137,11 @@ def main() -> None:
 
     submissions = client.fetch_all_accepted_submissions()
     if not submissions:
-        raise SystemExit("No accepted submissions were found for the current LeetCode account.")
+        raise SystemExit(
+            "No accepted submissions were found for the current LeetCode account. "
+            "This can happen if the cookies belong to a different account, the cookies expired, "
+            "or LeetCode returned submissions with an unexpected accepted status label."
+        )
 
     question_cache = load_state().get("question_cache", {})
     latest_by_problem = choose_preferred_submissions(submissions, preferred_langs)
@@ -238,6 +243,11 @@ def slugify(value: str) -> str:
 
 def normalize_newlines(text: str) -> str:
     return text.replace("\r\n", "\n").replace("\r", "\n")
+
+
+def is_accepted_status(status_display: str | None) -> bool:
+    normalized = (status_display or "").strip().lower()
+    return normalized in {"accepted", "ac"}
 
 
 def build_problem_readme(question: dict[str, Any], submission: Submission, details: dict[str, Any]) -> str:
@@ -382,7 +392,7 @@ class LeetCodeClient:
 
             submissions = block.get("submissions") or []
             for item in submissions:
-                if item.get("statusDisplay") != "Accepted":
+                if not is_accepted_status(item.get("statusDisplay")):
                     continue
                 if not item.get("titleSlug"):
                     continue
@@ -392,6 +402,7 @@ class LeetCodeClient:
                         title=item.get("title", ""),
                         title_slug=item["titleSlug"],
                         timestamp=int(item.get("timestamp") or 0),
+                        status_display=item.get("statusDisplay", ""),
                         lang=item.get("lang", ""),
                         lang_name=item.get("langName", ""),
                         runtime=item.get("runtime"),
