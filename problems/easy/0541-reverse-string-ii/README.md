@@ -3,9 +3,9 @@
 - Difficulty: Easy
 - Topics: Two Pointers, String
 - Language: C++
-- Runtime: 3 ms
-- Memory: 9.4 MB
-- Synced from accepted submission: 2026-02-20 17:52:45 UTC
+- Runtime: 0 ms
+- Memory: 9.5 MB
+- Synced from accepted submission: 2026-05-10 11:08:25 UTC
 - LeetCode: https://leetcode.com/problems/reverse-string-ii/
 
 ## Notes

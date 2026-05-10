@@ -3,9 +3,9 @@
 - Difficulty: Easy
 - Topics: Array, String, Trie
 - Language: C++
-- Runtime: 3 ms
-- Memory: 17.9 MB
-- Synced from accepted submission: 2026-02-21 12:57:22 UTC
+- Runtime: 0 ms
+- Memory: 12 MB
+- Synced from accepted submission: 2026-05-10 11:29:41 UTC
 - LeetCode: https://leetcode.com/problems/longest-common-prefix/
 
 ## Notes
