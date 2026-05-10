@@ -1,0 +1,24 @@
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        
+        int maxReach = 0;
+        
+        for(int i = 0; i < nums.size(); i++) {
+            
+            // Agar current index reachable hi nahi
+            if(i > maxReach) {
+                return false;
+            }
+            
+            // Update max reach
+            maxReach = max(maxReach, i + nums[i]);
+        }
+        
+        return true;
+    }
+};
